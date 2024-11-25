@@ -1,0 +1,143 @@
+CHIP Decoder201819051 {
+    IN A,B,C,D;
+    OUT a,b,c,d,e,f,g;
+    
+    PARTS:
+
+    Not (in=A, out = nota);    
+    Not (in=B, out = notb);    
+    Not (in=C, out = notc);    
+    Not (in=D, out = notd); 
+    Not(in=A, out=notA);
+    Not(in=B, out=notB);
+    Not(in=C, out=notC);
+    Not(in=D, out=notD);
+    Not(in=A, out=NotA);
+    Not(in=B, out=NotB);
+    Not(in=C, out=NotC);
+    Not(in=D, out=NotD);
+
+    // SEGEMENT A   
+    And (a=nota, b=B, out =firsta);    
+    And (a=firsta, b=notd, out = seconda);    
+    And (a=notc, b=B, out =thirda);    
+    And (a=thirda, b=D, out = fourtha);    
+    And (a=A, b=C, out = fiftha);    
+    And (a=C, b=notb, out = sixtha);    
+    And (a=A, b=notb, out = seventha);    
+    Or (a=seconda, b=fourtha, out = answer1a);    
+    Or (a=fiftha, b=sixtha, out = answer2a);    
+    Or (a=answer1a, b=answer2a, out = answer3a);    
+    Or (a=answer3a, b=seventha, out = a);
+
+    // SEGMENT B
+    And(a=NotB, b=NotD, out=one);
+    And(a=A, b=B, out=two);
+    And(a=A, b=C, out=three);
+    And(a=C, b=NotD, out=four);
+    Or(a=one, b=two, out=uno);
+    Or(a=uno, b=three, out=dos);
+    Or(a=dos, b=four, out=b);
+
+    // SEGMENENT C
+    And(a=A, b=notB, out=And1);
+    And(a=notC, b=notD, out=And2);
+    And(a=B, b=notD, out=And3);
+    And(a=A, b=C, out=And4);
+    And(a=notA, b=B, out=And5);
+    And(a=And5, b=notC, out=And6);
+    Or(a=And1, b=And2, out=Or1);
+    Or(a=And3, b=And4, out=Or2); 
+    Or(a=Or1, b=Or2, out=Or3);
+    Or(a=And6, b=Or3, out=c);
+
+    // SEGMENT D
+    And(a=A, b=B, out=andone);
+    And(a=C, b=notd, out=andtwo);
+    And(a=andone, b=andtwo, out=andthree);
+    And(a=notc, b=notd, out=notcandnotd);
+    And(a=A, b=notcandnotd, out=notcandnotdanda);
+    And(a=nota, b=notb, out=notaandnotb);
+    And(a=notc, b=notd, out=notcandnotd2);  
+    And(a=notaandnotb, b=notcandnotd2, out=notall);
+    And(a=nota, b=notb, out=notaandnotb2);
+    And(a=C, b=notaandnotb2, out=notaandnotbandc);
+    And(a=nota, b=C, out=notaandc);
+    And(a=notd, b=notaandc, out=notaandcandnotd);
+    And(a=A, b =notb, out=aandnotb);
+    And(a=notc, b= aandnotb, out=or5);
+    And(a=B, b=notc, out=bandnotc);
+    And(a=bandnotc, b=D, out=bandnotcandd);
+    And(a=A, b=notb, out=aandnotb2);
+    And(a=C, b=D, out=candd);
+    And(a=aandnotb2, b=candd, out=aandnotbandcandd);
+    Or(a=notcandnotdanda, b=notall, out=firstor);
+    Or(a=notaandnotbandc, b=notaandcandnotd, out=secondor);
+    Or(a=bandnotcandd, b=aandnotbandcandd, out=thirdor);
+    Or(a= thirdor, b= or5, out=fifthor);
+    Or(a=firstor, b=secondor, out=fourthor);
+    Or(a= fourthor, b=andthree, out=sixthor);
+    Or(a=sixthor, b=fifthor, out=d);
+
+    // SEGMENT E
+    And(a=NotA, b=NotB, out=NotANotB);
+    And(a=NotC, b=NotD, out=NotCNotD);
+    And(a=NotANotB, b=NotCNotD, out=Zero);
+    And(a=NotANotB, b=C, out=NotANotBC);
+    And(a=NotANotBC, b=NotD, out=TwoE);
+    And(a=NotANotBC, b=D, out=Three);
+    And(a=NotA, b=B, out=NotAB);
+    And(a=NotC, b=D, out=NotCD);
+    And(a=NotAB, b=NotCD, out=Five);
+    And(a=C, b=NotD, out=NotDC);
+    And(a=NotAB, b=NotDC, out=Six);
+    And(a=NotAB, b=C, out=NotABC);
+    And(a=NotABC, b=D, out=Seven);
+    And(a=A, b=NotB, out=NotBA);
+    And(a=NotBA, b=NotCNotD, out=Eight);
+    And(a=NotB, b=A, out=NotBA2);
+    And(a=NotC, b=D, out=NotCD2);
+    And(a=NotBA2, b=NotCD2, out=Nine);
+    And(a=NotBA, b=NotDC, out=Ten);
+    And(a=A, b=B, out=AB);
+    And(a=AB, b=NotCNotD, out=Twelve);
+    And(a=AB, b=NotDC, out=Fourteen);
+    And(a=AB, b=C, out=ABC);
+    And(a=ABC, b=D, out=Fithteen);
+    Or(a=Zero, b=TwoE, out=Beg1);
+    Or(a=Fithteen, b=Fourteen, out=End1);
+    Or(a=Three, b=Six, out=Beg2);
+    Or(a=Twelve, b=Ten, out=End2);
+    Or(a=Seven, b=Eight, out=Beg3);
+    Or(a=Five, b=Nine, out=End3);
+    Or(a=Beg3, b=End3, out=Merge3);
+    Or(a=Beg1, b=End1, out=Merge1);
+    Or(a=Beg2, b=End2, out=Merge2);
+    Or(a=Merge1, b=Merge2, out=Combo);
+    Or(a=Merge3, b=Combo, out=e);
+
+    // SEGMENT F
+    And (a=A, b=notB, out=and1);
+    And (a=notC, b=D, out=and2);
+    And (a=notA, b=notC, out=and3);
+    And (a=notA, b=D, out=and4);
+    And (a=notA, b=B, out=and5);
+    Or (a=and1, b=and2, out=or1);
+    Or (a=and3, b=and4, out=or2);
+    Or (a=or1, b=or2, out=or3);
+    Or (a=and5, b=or3, out=f);
+
+    // SEGMENT G
+    And (a=A, b=notC, out=AA);
+    And (a=AA, b=D, out=AAA);
+    And (a=notA, b=notB, out=BBB);
+    And (a=notA, b=C, out=CA);
+    And (a=CA, b=D, out=CCC);
+    And (a=notA, b=notC, out=DA);
+    And (a=DA, b=notD, out=DDD);
+    And (a=notB, b=notD, out=EEE);
+    Or (a=AAA, b=BBB, out=One);
+    Or (a=One, b=CCC, out=TwoG);
+    Or (a=TwoG, b=DDD, out=Thr);
+    Or (a=Thr, b=EEE, out=g);
+}
